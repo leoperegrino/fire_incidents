@@ -1,0 +1,112 @@
+with source as (
+    select *
+	from {{ source('raw', 'incidents') }}
+),
+
+normalized as (
+    select
+		incident_number
+		exposure_number,
+		id,
+		address,
+		incident_date,
+		call_number,
+		alarm_dttm,
+		arrival_dttm,
+		close_dttm,
+		city,
+		zipcode,
+		battalion,
+		station_area,
+		box,
+        suppression_units,
+        suppression_personnel,
+        ems_units,
+        ems_personnel,
+		other_units,
+		other_personnel,
+		first_unit_on_scene,
+		estimated_property_loss,
+		estimated_contents_loss,
+        fire_fatalities,
+        fire_injuries,
+        civilian_fatalities,
+        civilian_injuries,
+		number_of_alarms,
+		split_part(primary_situation, ' - ', 1) as primary_situation_id,
+		split_part(primary_situation, ' - ', 2) as primary_situation,
+		mutual_aid,
+		split_part(action_taken_primary, ' - ', 1) as action_taken_primary_id,
+		split_part(action_taken_primary, ' - ', 2) as action_taken_primary,
+		split_part(action_taken_secondary, ' - ', 1) as action_taken_secondary_id,
+		split_part(action_taken_secondary, ' - ', 2) as action_taken_secondary,
+		split_part(action_taken_other, ' - ', 1) as action_taken_other_id,
+		split_part(action_taken_other, ' - ', 2) as action_taken_other,
+		split_part(detector_alerted_occupants, ' - ', 1) as detector_alerted_occupants_id,
+		split_part(detector_alerted_occupants, ' - ', 2) as detector_alerted_occupants,
+		split_part(property_use, ' - ', 1) as property_use_id,
+		split_part(property_use, ' - ', 2) as property_use,
+		split_part(area_of_fire_origin, ' - ', 1) as area_of_fire_origin_id,
+		split_part(area_of_fire_origin, ' - ', 2) as area_of_fire_origin,
+		split_part(ignition_cause, ' - ', 1) as ignition_cause_id,
+		split_part(ignition_cause, ' - ', 2) as ignition_cause,
+		split_part(ignition_factor_primary, ' - ', 1) as ignition_factor_primary_id,
+		split_part(ignition_factor_primary, ' - ', 2) as ignition_factor_primary,
+		split_part(ignition_factor_secondary, ' - ', 1) as ignition_factor_secondary_id,
+		split_part(ignition_factor_secondary, ' - ', 2) as ignition_factor_secondary,
+		split_part(heat_source, ' - ', 1) as heat_source_id,
+		split_part(heat_source, ' - ', 2) as heat_source,
+		split_part(item_first_ignited, ' - ', 1) as item_first_ignited_id,
+		split_part(item_first_ignited, ' - ', 2) as item_first_ignited,
+		split_part(human_factors_associated_with_ignition, ' - ', 1) as human_factors_associated_with_ignition_id,
+		split_part(human_factors_associated_with_ignition, ' - ', 2) as human_factors_associated_with_ignition,
+		split_part(structure_type, ' -', 1) as structure_type_id,
+		split_part(structure_type, ' -', 2) as structure_type,
+		split_part(structure_status, ' -', 1) as structure_status_id,
+		split_part(structure_status, ' -', 2) as structure_status,
+		floor_of_fire_origin,
+		split_part(fire_spread, ' -', 1) as fire_spread_id,
+		split_part(fire_spread, ' -', 2) as fire_spread,
+		no_flame_spread,
+		number_of_floors_with_minimum_damage,
+		number_of_floors_with_significant_damage,
+		number_of_floors_with_heavy_damage,
+		number_of_floors_with_extreme_damage,
+		split_part(detectors_present, ' -', 1) as detectors_present_id,
+		split_part(detectors_present, ' -', 2) as detectors_present,
+		split_part(detector_type, ' -', 1) as detector_type_id,
+		split_part(detector_type, ' -', 2) as detector_type,
+		split_part(detector_operation, ' -', 1) as detector_operation_id,
+		split_part(detector_operation, ' -', 2) as detector_operation,
+		split_part(detector_effectiveness, ' -', 1) as detector_effectiveness_id,
+		split_part(detector_effectiveness, ' -', 2) as detector_effectiveness,
+		split_part(detector_failure_reason, ' -', 1) as detector_failure_reason_id,
+		split_part(detector_failure_reason, ' -', 2) as detector_failure_reason,
+		split_part(automatic_extinguishing_system_present, ' -', 1) as automatic_extinguishing_system_present_id,
+		split_part(automatic_extinguishing_system_present, ' -', 2) as automatic_extinguishing_system_present,
+		split_part(automatic_extinguishing_sytem_type, ' -', 1) as automatic_extinguishing_sytem_type_id,
+		split_part(automatic_extinguishing_sytem_type, ' -', 2) as automatic_extinguishing_sytem_type,
+		split_part(automatic_extinguishing_sytem_perfomance, ' -', 1) as automatic_extinguishing_sytem_perfomance_id,
+		split_part(automatic_extinguishing_sytem_perfomance, ' -', 2) as automatic_extinguishing_sytem_perfomance,
+		split_part(automatic_extinguishing_sytem_failure_reason, ' -', 1) as automatic_extinguishing_sytem_failure_reason_id,
+		split_part(automatic_extinguishing_sytem_failure_reason, ' -', 2) as automatic_extinguishing_sytem_failure_reason,
+		number_of_sprinkler_heads_operating,
+		supervisor_district,
+		neighborhood_district,
+        cast(case
+            when point is not null
+            then (point->'coordinates')[1]
+            else null
+        end as decimal(10, 8)) as latitude,
+        cast(case
+            when point is not null
+            then (point->'coordinates')[0]
+            else null
+        end as decimal(11, 8)) as longitude,
+		data_as_of,
+		data_loaded_at
+    from source
+)
+
+select *
+from normalized

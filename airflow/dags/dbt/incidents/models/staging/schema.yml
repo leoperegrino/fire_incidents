@@ -1,0 +1,21 @@
+version: 2
+
+
+sources:
+  - name: raw
+    description: Raw SF Open Data
+    tables:
+      - name: incidents
+        description: Raw fire incidents data from SF Open Data API
+
+
+models:
+  - name: stg_fire_incidents
+    description: normalized columns
+    columns:
+
+      - name: id
+        description: Unique incident identifier
+        tests:
+          - unique
+          - not_null

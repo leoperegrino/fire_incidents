@@ -1,0 +1,30 @@
+version: 2
+
+
+models:
+  - name: dim_actions
+    description: all actions
+    columns:
+      - name: id
+        description: Unique action identifier
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_factors
+    description: all factors
+    columns:
+      - name: id
+        description: Unique factor identifier
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_situations
+    description: all situations
+    columns:
+      - name: id
+        description: Unique situation identifier
+        tests:
+          - unique
+          - not_null

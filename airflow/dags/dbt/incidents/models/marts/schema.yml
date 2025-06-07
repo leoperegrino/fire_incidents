@@ -1,0 +1,5 @@
+models:
+- name: fact_incidents
+
+  config:
+    on_schema_change: append_new_columns
