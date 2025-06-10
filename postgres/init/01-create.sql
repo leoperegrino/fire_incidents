@@ -6,7 +6,7 @@ CREATE TABLE incidents (
     exposure_number INTEGER,
     id TEXT PRIMARY KEY,
     address TEXT,
-    incident_date TIMESTAMP,
+    incident_date DATE,
     call_number TEXT,
     alarm_dttm TIMESTAMP,
     arrival_dttm TIMESTAMP,
