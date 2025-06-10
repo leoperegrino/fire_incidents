@@ -1,5 +1,8 @@
 # Fire Data
 
+[Airflow doc](./airflow/README.md)
+[Postgres doc](./postgres/README.md)
+
 ## Initial Profiling
 
 - according to the website publishing/data change frequency is daily
@@ -45,10 +48,11 @@
 
 
 ```bash
-
-# for this test you may use as airflow .env:
+# use dummy values for environment for this test
+cat <<EOF > ./airflow/.env
 _AIRFLOW_WWW_USER_USERNAME="airflow"
 _AIRFLOW_WWW_USER_PASSWORD="airflow"
+
 AIRFLOW_CONN_INCIDENTS='{
     "conn_type": "postgres",
     "login": "postgres",
@@ -58,17 +62,15 @@ AIRFLOW_CONN_INCIDENTS='{
     "port": 5432,
 	"extra": {"options": "-c search_path=raw"}
 }'
+EOF
 
-# and postgres:
+cat <<EOF > ./postgres/.env
 POSTGRES_DB=warehouse
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
+EOF
 
-# start the postgres container first, due to the shared_network creation
-cd postgres
-docker compose up -d
-# start airflow
-cd ../airflow
+# start the containers
 docker compose up -d --build
 ```
 
