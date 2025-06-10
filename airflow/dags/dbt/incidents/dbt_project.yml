@@ -29,7 +29,7 @@ models:
     intermediate:
       +materialized: view
     dimensions:
-      +materialized: view
+      +materialized: table
     marts:
       +materialized: incremental
     facts:
