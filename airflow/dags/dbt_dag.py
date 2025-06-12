@@ -1,6 +1,7 @@
 import logging
 import os
 from datetime import datetime
+from datetime import timedelta
 from pathlib import Path
 
 import pandas as pd
@@ -53,8 +54,8 @@ with DbtDag(
 ) as dag:
 
     @task(task_id='extract_and_load',
-        # retries=3,
-        # retry_delay=timedelta(minutes=5),
+        retries=3,
+        retry_delay=timedelta(minutes=5),
     )
     def extract_load() -> None:
         """Extract only latest data and load it safely with UPSERT behaviour
@@ -99,6 +100,5 @@ with DbtDag(
         logger.info("Successfully loaded %s records to incidents table", len(df))
 
 
-    task = dag.tasks_map['model.incidents.stg_fire_incidents']
-
-    extract_load() >> task  # pyright: ignore[reportUnusedExpression]
+    el = extract_load()
+    el >> dag.tasks_map['model.incidents.stg_fire_incidents']  # pyright: ignore[reportUnusedExpression]

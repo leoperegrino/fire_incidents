@@ -1,18 +1,25 @@
 with source as (
-	select *
+	select
+		*,
+		{{ dbt_utils.generate_surrogate_key([
+			'address',
+			'city',
+			'zipcode',
+			'battalion',
+			'station_area',
+			'box',
+			'supervisor_district',
+			'neighborhood_district',
+			'latitude',
+			'longitude'
+		]) }} as location_id
 	from {{ ref('stg_fire_incidents') }}
 )
-{% if is_incremental() %}
-,
-latest_data as (
-	select
-		coalesce(max(data_loaded_at),'1900-01-01'::timestamp) as latest
-	from {{ this }} 
-)
-{% endif %}
 
 select
 	id,
+	location_id,
+	incident_date,
 	suppression_units,
 	suppression_personnel,
 	ems_units,
@@ -35,8 +42,3 @@ select
 	data_loaded_at
 from source
 
-{% if is_incremental() %}
-
-	where data_loaded_at >= (select latest from latest_data)
-
-{% endif %}

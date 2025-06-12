@@ -1,3 +1,5 @@
+name: incidents
+
 include:
   - ./airflow/docker-compose.yaml
   - ./postgres/docker-compose.yaml

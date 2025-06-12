@@ -1,0 +1,31 @@
+version: 2
+
+
+models:
+
+- name: locations
+  columns:
+    - name: id
+      tests:
+        - dbt_constraints.primary_key
+
+- name: time
+  columns:
+    - name: date_day
+      tests:
+        - dbt_constraints.primary_key
+
+- name: incidents
+  columns:
+
+  - name: location_id
+    tests:
+    - dbt_constraints.foreign_key:
+        pk_table_name: ref('locations')
+        pk_column_name: id
+
+  - name: incident_date
+    tests:
+    - dbt_constraints.foreign_key:
+        pk_table_name: ref('time')
+        pk_column_name: date_day

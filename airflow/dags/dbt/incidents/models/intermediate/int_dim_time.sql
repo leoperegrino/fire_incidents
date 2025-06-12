@@ -1,10 +1,8 @@
-{{ config(materialized='table') }}
-
 with date_spine as (
   {{ dbt_utils.date_spine(
       datepart="day",
-      start_date="'2010-01-01'::date",
-      end_date="'2015-12-31'::date"
+      start_date="'2000-01-01'::date",
+      end_date="'2025-12-31'::date"
   ) }}
 ),
 

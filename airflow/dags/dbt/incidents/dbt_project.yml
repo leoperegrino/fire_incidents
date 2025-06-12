@@ -28,9 +28,10 @@ models:
       +materialized: view
     intermediate:
       +materialized: view
-    dimensions:
-      +materialized: table
     marts:
-      +materialized: incremental
-    facts:
-      +materialized: incremental
+      core:
+        +schema: core
+        +materialized: table
+      analytics:
+        +schema: analytics
+        +materialized: table
