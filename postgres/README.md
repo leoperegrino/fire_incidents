@@ -14,9 +14,11 @@ Airflow unless you connect the different docker networks.
 1. Create `.env` file:
 
 ```bash
+cat <<EOF > .env
 POSTGRES_DB=warehouse
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
+EOF
 ```
 
 2. Start database:
