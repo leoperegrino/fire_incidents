@@ -101,4 +101,5 @@ with DbtDag(
 
 
     el = extract_load()
+    dag.tasks_map["model.incidents.incidents"] >> dag.tasks_map["model.incidents.int_dim_time"]  # pyright: ignore[reportUnusedExpression]
     el >> dag.tasks_map['model.incidents.stg_fire_incidents']  # pyright: ignore[reportUnusedExpression]
