@@ -18,6 +18,19 @@ orchestration, dimensional modeling, and data quality testing.
 └── docker-compose.yaml         # Full stack deployment
 ```
 
+### cosmos UI
+
+![./assets/cosmos.png](cosmos)
+
+### Airflow UI
+
+![./assets/airflow.png](airflow)
+
+### Schema
+
+![./assets/relationships.png](relationships)
+
+![./assets/schema.png](schema)
 
 For detailed component documentation:
 
@@ -96,7 +109,7 @@ ORDER BY casualty_rate_percent DESC;
 
 
 - **Incident severity**:
-  
+
 ```SQL
 SELECT
     month_name,
