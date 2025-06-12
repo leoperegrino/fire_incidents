@@ -76,6 +76,20 @@ ORDER BY incident_count DESC
 LIMIT 10;
 ```
 
+|battalion|incident_count|avg_personnel_per_incident|casualty_rate_percent|
+|---------|--------------|--------------------------|---------------------|
+|B02|108702|9.5|0.10|
+|B03|104237|9.7|0.11|
+|B01|86561|10.2|0.07|
+|B04|75624|9.8|0.10|
+|B10|63806|8.8|0.22|
+|B08|59425|9.0|0.11|
+|B09|56832|8.9|0.20|
+|B05|54194|9.6|0.16|
+|B06|53059|9.4|0.21|
+|B07|40873|9.5|0.13|
+
+
 - **Seasonal peaks**
 
 ```SQL
@@ -86,8 +100,23 @@ SELECT
     avg_units_required,
     total_loss
 FROM incidents_analytics.seasonal_patterns
-ORDER BY incident_count DESC;
+ORDER BY incident_count DESC
+LIMIT 10;
 ```
+
+|quarter|month_name|incident_count|avg_units_required|total_loss|
+|-------|----------|--------------|------------------|----------|
+|1|January  |47029|2.6|60329536.00|
+|4|December |44531|2.8|84795909.00|
+|4|October  |43790|2.8|71478570.00|
+|1|March    |42785|2.8|99796462.00|
+|3|July     |42302|2.7|167742636.00|
+|3|August   |41696|2.7|103048481.35|
+|4|November |41660|2.7|46070682.60|
+|2|May      |41389|2.7|55032895.00|
+|3|September|41138|2.8|44225047.99|
+|2|April    |40409|2.7|64910592.00|
+
 
 - **High-risk neighborhoods**:
 
@@ -103,6 +132,18 @@ WHERE incident_rank <= 10
 ORDER BY casualty_rate_percent DESC;
 ```
 
+|neighborhood_district|incident_count|casualty_rate_percent|avg_loss_per_incident|incident_rank|
+|---------------------|--------------|---------------------|---------------------|-------------|
+|Bayview Hunters Point|39650|0.29|3082.21|5|
+|Mission|62859|0.22|3319.12|2|
+|Tenderloin|65355|0.15|3786.01|1|
+|Sunset/Parkside|26584|0.15|1894.12|7|
+|Nob Hill|24323|0.14|1495.01|8|
+|Western Addition|28875|0.11|1074.24|6|
+|Hayes Valley|18537|0.08|2175.02|10|
+|South of Market|53224|0.06|935.00|4|
+|Pacific Heights|19438|0.05|1139.33|9|
+|Financial District/South Beach|54280|0.04|613.54|3|
 
 - **Incident severity**:
 
@@ -114,8 +155,22 @@ SELECT
     total_personnel_deployed,
     (fatal_incidents::numeric / incident_count * 100) as fatality_rate_percent
 FROM incidents_analytics.monthly_incidents
-ORDER BY fatality_rate_percent DESC;
+ORDER BY fatality_rate_percent DESC
+LIMIT 10;
 ```
+
+|month_name|incident_count|fatal_incidents|total_personnel_deployed|fatality_rate_percent|
+|----------|--------------|---------------|------------------------|---------------------|
+|February |3059|2|27528|0.06538084341288002600|
+|April    |1921|1|18113|0.05205622071837584600|
+|April    |2157|1|20156|0.04636068613815484500|
+|February |2158|1|20526|0.04633920296570899000|
+|June     |2162|1|20440|0.04625346901017576300|
+|May      |2177|1|21135|0.04593477262287551700|
+|June     |2204|1|23534|0.04537205081669691500|
+|September|2214|1|21293|0.04516711833785004500|
+|November |2244|1|21033|0.04456327985739750400|
+|December |2320|1|22064|0.04310344827586206900|
 
 ## Quick Start
 
