@@ -18,19 +18,15 @@ orchestration, dimensional modeling, and data quality testing.
 └── docker-compose.yaml         # Full stack deployment
 ```
 
-### cosmos UI
+### Airflow/Cosmos UI
 
-![./assets/cosmos.png](cosmos)
-
-### Airflow UI
-
-![./assets/airflow.png](airflow)
+![cosmos](./assets/cosmos.png)
 
 ### Schema
 
-![./assets/relationships.png](relationships)
+![relationships](./assets/relationships.png)
 
-![./assets/schema.png](schema)
+![schema](./assets/schema.png)
 
 For detailed component documentation:
 
