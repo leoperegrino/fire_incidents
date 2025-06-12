@@ -23,7 +23,7 @@ For detailed component documentation:
 
 - **[Airflow](./airflow/README.md)**
 - **[Postgres](./postgres/README.md)**
-- **[dbt](./airflow/dags/dbt/incidents/README.md)**
+- **[dbt](./airflow/dags/dbt/README.md)**
 
 
 ## Architecture Overview
