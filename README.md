@@ -98,7 +98,7 @@ SELECT
     month_name,
     incident_count,
     avg_units_required,
-    total_loss
+    total_loss::text::money
 FROM incidents_analytics.seasonal_patterns
 ORDER BY incident_count DESC
 LIMIT 10;
@@ -106,17 +106,16 @@ LIMIT 10;
 
 |quarter|month_name|incident_count|avg_units_required|total_loss|
 |-------|----------|--------------|------------------|----------|
-|1|January  |47029|2.6|60329536.00|
-|4|December |44531|2.8|84795909.00|
-|4|October  |43790|2.8|71478570.00|
-|1|March    |42785|2.8|99796462.00|
-|3|July     |42302|2.7|167742636.00|
-|3|August   |41696|2.7|103048481.35|
-|4|November |41660|2.7|46070682.60|
-|2|May      |41389|2.7|55032895.00|
-|3|September|41138|2.8|44225047.99|
-|2|April    |40409|2.7|64910592.00|
-
+|1|January  |47029|2.6|$60,329,536.00|
+|4|December |44531|2.8|$84,795,909.00|
+|4|October  |43790|2.8|$71,478,570.00|
+|1|March    |42785|2.8|$99,796,462.00|
+|3|July     |42302|2.7|$167,742,636.00|
+|3|August   |41696|2.7|$103,048,481.35|
+|4|November |41660|2.7|$46,070,682.60|
+|2|May      |41389|2.7|$55,032,895.00|
+|3|September|41138|2.8|$44,225,047.99|
+|2|April    |40409|2.7|$64,910,592.00|
 
 - **High-risk neighborhoods**:
 
@@ -153,7 +152,7 @@ SELECT
     incident_count,
     fatal_incidents,
     total_personnel_deployed,
-    (fatal_incidents::numeric / incident_count * 100) as fatality_rate_percent
+    CONCAT(ROUND((fatal_incidents::NUMERIC / incident_count * 100), 2), '%')  as fatality_rate_percent
 FROM incidents_analytics.monthly_incidents
 ORDER BY fatality_rate_percent DESC
 LIMIT 10;
@@ -161,16 +160,16 @@ LIMIT 10;
 
 |month_name|incident_count|fatal_incidents|total_personnel_deployed|fatality_rate_percent|
 |----------|--------------|---------------|------------------------|---------------------|
-|February |3059|2|27528|0.06538084341288002600|
-|April    |1921|1|18113|0.05205622071837584600|
-|April    |2157|1|20156|0.04636068613815484500|
-|February |2158|1|20526|0.04633920296570899000|
-|June     |2162|1|20440|0.04625346901017576300|
-|May      |2177|1|21135|0.04593477262287551700|
-|June     |2204|1|23534|0.04537205081669691500|
-|September|2214|1|21293|0.04516711833785004500|
-|November |2244|1|21033|0.04456327985739750400|
-|December |2320|1|22064|0.04310344827586206900|
+|February |3059|2|27528|0.07%|
+|September|2214|1|21293|0.05%|
+|May      |2177|1|21135|0.05%|
+|April    |1921|1|18113|0.05%|
+|February |2158|1|20526|0.05%|
+|June     |2204|1|23534|0.05%|
+|June     |2162|1|20440|0.05%|
+|April    |2157|1|20156|0.05%|
+|January  |2821|1|24492|0.04%|
+|November |2244|1|21033|0.04%|
 
 ## Quick Start
 
