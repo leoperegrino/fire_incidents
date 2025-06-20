@@ -176,7 +176,7 @@ LIMIT 10;
 
 ```bash
 git clone https://github.com/leoperegrino/fire_incidents
-cd fire-incidents
+cd fire_incidents
 
 # Airflow configuration
 cat <<EOF > ./airflow/.env
